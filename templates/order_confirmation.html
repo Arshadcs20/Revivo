@@ -1,0 +1,20 @@
+{% extends "base.html" %} {% block title %}Payment Confirmation{% endblock %} {%
+block content %}
+<div class="container">
+  <div class="starter-template">
+    <h1>Your Order Has Been Processed</h1>
+    <p class="lead">
+      Please check your mail. You would have received your order details from
+      us.
+    </p>
+    <p>
+      <a class="btn btn-primary" href="{{ url_for('home') }}" role="button"
+        ><i class="bi bi-arrow-return-left mx-2"></i>Return to Site!</a
+      >
+    </p>
+  </div>
+</div>
+<!-- /.container -->
+{% endblock %} {% block scripts %}
+<script src="{{ url_for('static', filename='site/js/site.js') }}"></script>
+{% endblock %}

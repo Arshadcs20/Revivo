@@ -1,0 +1,97 @@
+{% extends "base.html" %} {% block title %}Dress Details{% endblock %} {% block
+content %}
+<div class="container w-100 rounded border-0 shadow-lg mt-4">
+  <div class="row px-lg-5">
+    <div class="col-sm-3 rounded shadow-lg my-1 p-1">
+      {% if image_base64 %}
+      <img
+        src="data:image/jpeg;base64,{{ image_base64 }}"
+        class="card-img-top"
+        alt="Dress Image"
+      />
+      {% else %}
+      <p class="card-img-top">No Image Available</p>
+      {% endif %}
+    </div>
+    <div class="col-sm-9 p-5">
+      <h4 class="card-title my-3">{{ dress.Dres_type }}</h4>
+      <p class="card-text">
+        <strong>Dress Info:</strong> {{ dress.dress_info }}
+      </p>
+      <p class="card-text"><strong>Size:</strong> {{ dress.Size }}</p>
+      <!-- <p class="card-text">Color: {{ dress.color }}</p> -->
+      <p class="card-text">
+        <strong>Price:</strong> ${{ dress.price_of_a_dress }}
+      </p>
+      <p class="card-text"><strong>Brand:</strong> {{ dress.Brand }}</p>
+      <p class="card-text">
+        <strong>Date of Purchase:</strong> {{ dress.date_of_purchase }}
+      </p>
+      <p class="card-text">
+        <strong>Additional Info:</strong> {{ dress.additional_info }}
+      </p>
+    </div>
+    <div class="col-md-12 my-2">
+      <div class="card shadow-sm">
+        <div class="card-body text-center">
+          <form
+            method="GET"
+            action="{{ url_for('checkout') }}"
+            class="form-control"
+          >
+            <input type="hidden" name="product_id" value="{{ dress.id }}" />
+            <input
+              type="hidden"
+              name="product_name"
+              value="{{ dress.Dres_type }}"
+            />
+            <input
+              type="hidden"
+              name="product_info"
+              value="{{ dress.dress_info }}"
+            />
+            <input type="hidden" name="product_size" value="{{ dress.Size }}" />
+            <input
+              type="hidden"
+              name="product_color"
+              value="{{ dress.color }}"
+            />
+            <input
+              type="hidden"
+              name="product_price"
+              value="{{ dress.price_of_a_dress }}"
+            />
+            <input
+              type="hidden"
+              name="product_brand"
+              value="{{ dress.Brand }}"
+            />
+            <input
+              type="hidden"
+              name="product_purchase_date"
+              value="{{ dress.date_of_purchase }}"
+            />
+            <input
+              type="hidden"
+              name="product_additional_info"
+              value="{{ dress.additional_info }}"
+            />
+            <button type="button" class="btn btn-secondary">
+              <a href="{{ url_for('lender_data') }}" class="btn btn-secondary"
+                ><i class="bi bi-arrow-left mx-1"></i>Back to Renting</a
+              >
+            </button>
+            <button type="submit" class="btn btn-primary">
+              <a
+                href="{{ url_for('add_to_cart', dress_id=dress.id) }}"
+                class="btn btn-primary"
+                ><i class="bi bi-bag-plus mx-1"></i>Add to Cart</a
+              >
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

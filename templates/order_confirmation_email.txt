@@ -1,0 +1,17 @@
+Dear {{ order_details.first_name }} {{ order_details.last_name }},
+
+Thank you for your order. Here are the details:
+
+Order Total: ${{ order_details.total_price }}
+Shipping Address: {{ order_details.address }}, {{ order_details.city }}, {{ order_details.state }} {{ order_details.postalcode }}
+Phone: {{ order_details.phone }}
+
+Items:
+{% for item in order_details.cart_items %}
+- {{ item.Dres_type }}: {{ item.size }}, {{ item.color }} - ${{ item.price_of_a_dress }}
+{% endfor %}
+
+We will notify you once your order is shipped.
+
+Best regards,
+Revivo | Clothing Rental Website

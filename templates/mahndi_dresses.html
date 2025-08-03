@@ -1,0 +1,41 @@
+{% extends "base.html" %} {% block title %}Mahndi Dresses{% endblock %} {% block
+content %}
+<div class="container">
+  <div class="row">
+    {% for form_data in mahndi_dresses %}
+    <div class="col-md-3 shadow-lg py-3">
+      <div class="card">
+        {% if form_data.image_base64 %}
+        <img
+          src="data:image/jpeg;base64,{{ form_data.image_base64 }}"
+          class="card-img-top"
+          style="height: 300px"
+          alt="Dress Image"
+        />
+        {% else %}
+        <p>No Image Available</p>
+        {% endif %}
+        <div class="card-body my-1">
+          <h5 class="card-title">
+            {{ form_data.Dres_type }} | Rs: {{ form_data.price_of_a_dress }}
+          </h5>
+          <p class="card-text text-small text-truncate" style="max-width: 40ch">
+            {{ form_data.dress_info }}
+          </p>
+          <a
+            href="{{ url_for('dress_details', dress_id=form_data.id) }}"
+            class="btn btn-primary"
+            ><i class="bi bi-ticket-detailed mx-1"></i>Details</a
+          >
+          <a
+            href="{{ url_for('add_to_cart', dress_id=form_data.id) }}"
+            class="btn btn-primary"
+            ><i class="bi bi-bag-plus mx-1"></i>Add to Cart</a
+          >
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

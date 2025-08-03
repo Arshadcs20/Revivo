@@ -1,0 +1,136 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+%}
+<div class="jumbotron text-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1>My Orders</h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="btn-group mb-3">
+    <a href="#" id="list" class="btn btn-outline-secondary btn-sm">
+      <i class="bi bi-list"></i> List
+    </a>
+    <a href="#" id="grid" class="btn btn-outline-secondary btn-sm">
+      <i class="bi bi-grid-3x3-gap"></i> Grid
+    </a>
+    <button
+      class="btn btn-outline-secondary btn-sm"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#collapseExample"
+      aria-expanded="false"
+      aria-controls="collapseExample"
+    >
+      <i class="bi bi-sort"></i> Sort Items
+    </button>
+  </div>
+
+  <div class="collapse" id="collapseExample">
+    <form class="row g-3">
+      <div class="col-md-4">
+        <label for="choosecolor" class="form-label">Select Color</label>
+        <select id="choosecolor" name="choosecolor" class="form-select">
+          <option value="1">Black</option>
+          <option value="2">White</option>
+          <option value="3">Gray</option>
+          <option value="4">Red</option>
+          <option value="5">Blue</option>
+          <option value="6">Green</option>
+          <option value="7">Orange</option>
+          <option value="8">Yellow</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label for="selectsize" class="form-label">Select Size</label>
+        <select id="selectsize" name="selectsize" class="form-select">
+          <option value="1">6</option>
+          <option value="2">6.5</option>
+          <option value="3">7</option>
+          <option value="4">7.5</option>
+          <option value="5">8</option>
+          <option value="6">8.5</option>
+          <option value="7">9</option>
+          <option value="8">9.5</option>
+          <option value="9">10</option>
+          <option value="10">10.5</option>
+          <option value="11">11</option>
+          <option value="12">11.5</option>
+          <option value="13">12</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label for="selectprice" class="form-label">Price Range</label>
+        <select id="selectprice" name="selectprice" class="form-select">
+          <option value="1">$10 or Less</option>
+          <option value="2">$20 or Less</option>
+          <option value="3">$30 or Less</option>
+          <option value="4">$40 or Less</option>
+          <option value="5">$50 or Less</option>
+          <option value="6">$75 or Less</option>
+          <option value="7">$100 or Less</option>
+          <option value="8">$100 or More</option>
+        </select>
+      </div>
+      <div class="col-12 text-center">
+        <button id="submit" name="submit" class="btn btn-primary">
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div id="products" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    <div class="col">
+      <div class="card">
+        <img
+          src="{{ url_for('static', filename='site/img/landing/img3.jpg') }}"
+          class="card-img-top"
+          alt="Product Image"
+        />
+        <div class="card-body">
+          <h5 class="card-title">Product title</h5>
+          <p class="card-text">Enter the product description here.</p>
+          <div class="d-flex justify-content-between align-items-center">
+            <span class="text-muted">$21.00</span>
+            <a href="#" class="btn btn-primary">Rented</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Repeat for other products -->
+  </div>
+
+  <nav aria-label="Page navigation" class="mt-4">
+    <ul class="pagination justify-content-center">
+      <li class="page-item active" aria-current="page">
+        <span class="page-link">1</span>
+      </li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item"><a class="page-link" href="#">4</a></li>
+      <li class="page-item"><a class="page-link" href="#">5</a></li>
+    </ul>
+  </nav>
+</div>
+{% endblock %} {% block scripts %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $("#list").click(function (event) {
+      event.preventDefault();
+      $("#products .col").addClass("list-group-item");
+    });
+    $("#grid").click(function (event) {
+      event.preventDefault();
+      $("#products .col").removeClass("list-group-item");
+      $("#products .col").addClass("grid-group-item");
+    });
+  });
+</script>
+{% endblock scripts %}

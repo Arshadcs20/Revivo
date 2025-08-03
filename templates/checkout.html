@@ -1,0 +1,446 @@
+{% extends "base.html" %} {% block title %}{{ super() }} Checkout{% endblock %}
+{% block content %}
+<div class="container px-3 my-5 clearfix">
+  <!-- Checkout header -->
+  <div class="jumbotron jumbotron-carousel corporate-jumbo text-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 col-sm-12">
+          <h1>Checkout</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row my-5">
+    <div class="col-md-12">
+      <div id="mainContentWrapper">
+        <div class="col-md-12">
+          <h2 class="text-center">Review Your Order & Complete Checkout</h2>
+          <hr />
+          <div class="shopping_cart">
+            <form
+              class="needs-validation"
+              action="{{ url_for('checkout') }}"
+              method="post"
+              id="payment-form"
+            >
+              <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingOne">
+                    <button
+                      class="accordion-button"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapseOne"
+                      aria-expanded="true"
+                      aria-controls="collapseOne"
+                    >
+                      Review Your Order
+                    </button>
+                  </h2>
+                  <div
+                    id="collapseOne"
+                    class="accordion-collapse collapse show"
+                    aria-labelledby="headingOne"
+                    data-bs-parent="#accordionExample"
+                  >
+                    <div class="accordion-body">
+                      <div class="row">
+                        <div class="col-md-9">
+                          <table class="table table-striped">
+                            <thead>
+                              <tr>
+                                <th>Product Name</th>
+                                <th>Details</th>
+                                <th>Rent</th>
+                                <th>Quantity</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {% for item in cart_items %} {% set dress =
+                              get_dress_by_id(item.id) %}
+                              <tr>
+                                <td>{{ item.Dres_type }}</td>
+                                <td>
+                                  <ul>
+                                    <li>Info: {{ dress.dress_info }}</li>
+                                    <li>Size: {{ dress.Size }}</li>
+                                    <!-- <li>Color: {{ item.color }}</li> -->
+                                  </ul>
+                                </td>
+                                <td>${{ item.price_of_a_dress }}</td>
+                                <td>{{ item.quantity }}</td>
+                              </tr>
+                              {% endfor %}
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-md-3 text-center">
+                          <h3>Sub Total</h3>
+                          <h3>
+                            <span class="text-success">${{ total_price }}</span>
+                          </h3>
+                          <input
+                            type="hidden"
+                            name="total_price"
+                            value="{{ total_price }}"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingTwo">
+                    <button
+                      class="accordion-button collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapseTwo"
+                      aria-expanded="false"
+                      aria-controls="collapseTwo"
+                    >
+                      Customer Information
+                    </button>
+                  </h2>
+                  <div
+                    id="collapseTwo"
+                    class="accordion-collapse collapse"
+                    aria-labelledby="headingTwo"
+                    data-bs-parent="#accordionExample"
+                  >
+                    <div class="accordion-body">
+                      <b
+                        >Help us keep your account safe and secure, please
+                        verify your information.</b
+                      ><br /><br />
+                      <div class="mb-3">
+                        <label for="id_email" class="form-label"
+                          >Best Email:</label
+                        >
+                        <input
+                          type="email"
+                          class="form-control"
+                          id="id_email"
+                          name="email"
+                          required
+                        />
+                        <div class="invalid-feedback">
+                          Please enter a valid email.
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="id_first_name" class="form-label"
+                          >First name:</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="id_first_name"
+                          name="first_name"
+                          required
+                        />
+                        <div class="invalid-feedback">
+                          Please enter your first name.
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="id_last_name" class="form-label"
+                          >Last name:</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="id_last_name"
+                          name="last_name"
+                          required
+                        />
+                        <div class="invalid-feedback">
+                          Please enter your last name.
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="id_address_line_1" class="form-label"
+                          >Address line 1:</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="id_address_line_1"
+                          name="address_line_1"
+                          required
+                        />
+                        <div class="invalid-feedback">
+                          Please enter your address.
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="id_city" class="form-label">City:</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="id_city"
+                          name="city"
+                          required
+                        />
+                        <div class="invalid-feedback">
+                          Please enter your city.
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="id_state" class="form-label">State:</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="id_state"
+                          name="state"
+                          required
+                        />
+                        <div class="invalid-feedback">
+                          Please enter your state.
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="id_postalcode" class="form-label"
+                          >Postal code:</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="id_postalcode"
+                          name="postalcode"
+                          required
+                        />
+                        <div class="invalid-feedback">
+                          Please enter your postal code.
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="id_phone" class="form-label">Phone:</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="id_phone"
+                          name="phone"
+                          required
+                        />
+                        <div class="invalid-feedback">
+                          Please enter your phone number.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingThree">
+                    <button
+                      class="accordion-button collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapseThree"
+                      aria-expanded="false"
+                      aria-controls="collapseThree"
+                    >
+                      Payment Information
+                    </button>
+                  </h2>
+                  <div
+                    id="collapseThree"
+                    class="accordion-collapse collapse"
+                    aria-labelledby="headingThree"
+                    data-bs-parent="#accordionExample"
+                  >
+                    <div class="accordion-body">
+                      <div class="mb-3">
+                        <label for="id_payment_method" class="form-label"
+                          >Select Payment Method:</label
+                        >
+                        <select
+                          class="form-control"
+                          id="id_payment_method"
+                          name="payment_method"
+                          required
+                        >
+                          <option value="">Select Payment Method</option>
+                          <option value="card">Credit/Debit Card</option>
+                          <option value="jazzcash">Jazzcash</option>
+                          <option value="easypaisa">Easypaisa</option>
+                          <option value="Cash_On_Delivery">
+                            Cash On Delivery
+                          </option>
+                        </select>
+                        <div class="invalid-feedback">
+                          Please select a payment method.
+                        </div>
+                      </div>
+
+                      <!-- Credit Card Payment -->
+                      <div id="card_payment_fields">
+                        <div class="mb-3">
+                          <label for="id_card_number" class="form-label"
+                            >Card Number:</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="id_card_number"
+                            name="card_number"
+                          />
+                          <div class="invalid-feedback">
+                            Please enter your card number.
+                          </div>
+                        </div>
+                        <div class="mb-3">
+                          <label for="id_card_type" class="form-label"
+                            >Card Type:</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="id_card_type"
+                            name="card_type"
+                          />
+                          <div class="invalid-feedback">
+                            Please enter your card type.
+                          </div>
+                        </div>
+                        <div class="mb-3">
+                          <label for="id_expiry_month" class="form-label"
+                            >Expiry Month:</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="id_expiry_month"
+                            name="expiry_month"
+                          />
+                          <div class="invalid-feedback">
+                            Please enter your card's expiry month.
+                          </div>
+                        </div>
+                        <div class="mb-3">
+                          <label for="id_expiry_year" class="form-label"
+                            >Expiry Year:</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="id_expiry_year"
+                            name="expiry_year"
+                          />
+                          <div class="invalid-feedback">
+                            Please enter your card's expiry year.
+                          </div>
+                        </div>
+                        <div class="mb-3">
+                          <label for="id_cvv" class="form-label">CVV:</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="id_cvv"
+                            name="cvv"
+                          />
+                          <div class="invalid-feedback">
+                            Please enter your card's CVV.
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- JazzCash Payment -->
+                      <div id="jazzcash_payment_fields">
+                        <div class="mb-3">
+                          <label for="id_jazzcash_number" class="form-label"
+                            >JazzCash Number:</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="id_jazzcash_number"
+                            name="jazzcash_number"
+                          />
+                          <div class="invalid-feedback">
+                            Please enter your JazzCash number.
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- EasyPaisa Payment -->
+                      <div id="easypaisa_payment_fields">
+                        <div class="mb-3">
+                          <label for="id_easypaisa_number" class="form-label"
+                            >EasyPaisa Number:</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="id_easypaisa_number"
+                            name="easypaisa_number"
+                          />
+                          <div class="invalid-feedback">
+                            Please enter your EasyPaisa number.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Submit button -->
+              <div class="text-center mt-4">
+                <button
+                  type="submit"
+                  class="btn btn-primary small"
+                  id="btn_submit"
+                >
+                  <i class="bi bi-rocket-takeoff mx-1"></i>
+                  Place Order
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %} {% block scripts %}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var payment_method = document.getElementById("id_payment_method");
+    var card_payment_fields = document.getElementById("card_payment_fields");
+    var jazzcash_payment_fields = document.getElementById(
+      "jazzcash_payment_fields"
+    );
+    var easypaisa_payment_fields = document.getElementById(
+      "easypaisa_payment_fields"
+    );
+
+    payment_method.addEventListener("change", function () {
+      if (payment_method.value === "card") {
+        card_payment_fields.style.display = "block";
+        jazzcash_payment_fields.style.display = "none";
+        easypaisa_payment_fields.style.display = "none";
+      } else if (payment_method.value === "jazzcash") {
+        card_payment_fields.style.display = "none";
+        jazzcash_payment_fields.style.display = "block";
+        easypaisa_payment_fields.style.display = "none";
+      } else if (payment_method.value === "easypaisa") {
+        card_payment_fields.style.display = "none";
+        jazzcash_payment_fields.style.display = "none";
+        easypaisa_payment_fields.style.display = "block";
+      } else {
+        card_payment_fields.style.display = "none";
+        jazzcash_payment_fields.style.display = "none";
+        easypaisa_payment_fields.style.display = "none";
+      }
+    });
+
+    // Trigger change event to hide/show fields based on initial selection
+    payment_method.dispatchEvent(new Event("change"));
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %} {% block title %}Other Dresses{% endblock %} {% block
+content %}
+<div class="container">
+  <div class="row">
+    {% for dress in Other_dresses %}
+
+    <div class="col-md-3 py-3">
+      <div class="card card-hover">
+        {% if dress.image_base64 %}
+        <img
+          src="data:image/jpeg;base64,{{ dress.image_base64 }}"
+          class="card-img-top"
+          style="height: 300px"
+          s
+          alt="Dress Image"
+        />
+        {% else %}
+        <p>No Image Available</p>
+        {% endif %}
+        <div class="card-body my-1 shadow-lg">
+          <h5 class="card-title">
+            {{ dress.Dres_type }} | Rs: {{ dress.price_of_a_dress }}
+          </h5>
+          <p class="card-text text-small text-truncate" style="max-width: 40ch">
+            {{ dress.dress_info }}
+          </p>
+          <a
+            href="{{ url_for('dress_details', dress_id=dress.id) }}"
+            class="btn btn-primary"
+            ><i class="bi bi-ticket-detailed mx-1"></i>Details</a
+          >
+          <a
+            href="{{ url_for('add_to_cart', dress_id=dress.id) }}"
+            class="btn btn-primary"
+            ><i class="bi bi-bag-plus mx-1"></i>Add to Cart</a
+          >
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
